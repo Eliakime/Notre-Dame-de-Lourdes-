@@ -1,0 +1,40 @@
+'use client';
+import { WhatsAppIcon } from '../components/WhatsAppIcon';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight, ArrowRight, Menu, X, MapPin, BookOpen, GraduationCap, Check, Plus, Minus } from 'lucide-react';
+import { whatsapp } from '../lib/formations';
+import { FormationExplorer } from '../components/FormationExplorer';
+import { Reveal } from '../components/Motion';
+import { Brand } from '../components/Brand';
+
+
+export default function Home() {
+  const [menu, setMenu] = useState(false);
+  const [faq, setFaq] = useState<number | null>(0);
+  const questions = [
+    ['Quelle est la différence entre le lycée et le centre ?', 'Le lycée technique accueille les élèves de Seconde, Première et Terminale dans cinq filières. Le centre, situé au sein de l’établissement, propose six formations professionnelles orientées vers un métier.'],
+    ['Comment faire une demande d’inscription ?', 'Remplissez le formulaire de préinscription en ligne. Il prépare un message récapitulatif que vous pourrez envoyer au secrétariat sur WhatsApp. L’établissement vous précisera les pièces à fournir et les conditions d’admission.'],
+    ['Quels sont les frais et les dates de rentrée ?', 'Contactez le secrétariat sur WhatsApp pour connaître les frais, le calendrier et les modalités propres à votre formation.'],
+    ['Où se trouve l’établissement ?', 'Notre Dame de Lourdes est situé à Dassa-Zoumè, au Bénin. Le secrétariat peut vous transmettre les indications précises pour préparer votre visite.'],
+  ];
+  return <>
+    <div className="topbar"><span><MapPin size={12}/> Dassa-Zoumè, Bénin</span><span>Un savoir. Un métier. Un avenir.</span><a href={whatsapp} target="_blank" rel="noreferrer">Parlons de votre avenir <ArrowUpRight size={12}/></a></div>
+    <header><div className="nav wrap"><Brand/><nav className={menu ? 'open' : ''} aria-label="Navigation principale"><a href="#ecole" onClick={()=>setMenu(false)}>L’établissement</a><a href="#formations" onClick={()=>setMenu(false)}>Nos formations</a><Link href="/bibliotheque">Bibliothèque <ArrowUpRight size={12}/></Link></nav><Link className="button small" href="/inscription">Se préinscrire <ArrowUpRight size={16}/></Link><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-label={menu ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={menu}>{menu ? <X/> : <Menu/>}</button></div></header>
+    <main>
+      <section className="hero wrap">
+        <div className="hero-copy"><div className="eyebrow"><span className="dot"/> LYCÉE TECHNIQUE & CENTRE DE FORMATION</div><h1>Le savoir en tête.<br/>Le métier<br/><span>entre les mains.</span><svg className="underline" viewBox="0 0 410 18" aria-hidden="true"><path d="M3 12 Q170 -3 406 8 M65 17 Q230 5 356 13"/></svg></h1><p>À Dassa-Zoumè, Notre Dame de Lourdes accompagne les talents d’aujourd’hui vers les métiers de demain.</p><div className="hero-actions"><a className="button" href="#formations">Trouver ma formation <ArrowUpRight size={19}/></a><a className="text-link" href={whatsapp} target="_blank" rel="noreferrer"><WhatsAppIcon size={19}/> Échanger avec nous</a></div><div className="hero-foot"><span className="mini-seal"><GraduationCap size={21}/></span><span>De la passion à la profession.<br/><strong>Votre avenir commence ici.</strong></span></div></div>
+        <div className="hero-art"><div className="art-grid"/><div className="art-top"><span>NOTRE DAME DE LOURDES</span><span>01 / L’AVENIR SE CONSTRUIT</span></div><div className="architectural"><div className="arch arch-one"/><div className="arch arch-two"/><div className="arch arch-three"/><div className="steps"><i/><i/><i/><i/></div><div className="sun-orb"/><span className="crosshair cross-one">+</span><span className="crosshair cross-two">+</span><div className="vertical-label">APPRENDRE · PRATIQUER · RÉUSSIR</div></div><div className="art-bottom"><span>LE GOÛT D’APPRENDRE.<br/><strong>LA FORCE DE FAIRE.</strong></span><ArrowUpRight size={48} strokeWidth={1}/></div><div className="floating-label"><span className="dot"/> Des compétences pour la vie.</div></div>
+      </section>
+      <Reveal><div className="numbers wrap"><div><strong>02<span> parcours</span></strong><p>Une ambition : votre avenir</p></div><div><strong>05<span> filières techniques</span></strong><p>De la Seconde à la Terminale</p></div><div><strong>06<span> formations métiers</span></strong><p>Au centre de formation</p></div><a href="#formations">Et vous,<br/><strong>quelle sera votre voie ? <ArrowDown/></strong></a></div></Reveal>
+      <FormationExplorer/>
+      <Reveal><section id="ecole" className="school section wrap"><div className="school-art"><div className="eyebrow">NOTRE DAME DE LOURDES</div><div className="school-symbol"><BookOpen size={130} strokeWidth={.7}/><span>✦</span></div><h3>Grandir par le savoir.<br/>S’accomplir par le métier.</h3><div className="school-location"><MapPin size={16}/> DASSA-ZOUMÈ · BÉNIN</div></div><div className="school-copy"><div className="eyebrow">02 — UN LIEU POUR DEVENIR</div><h2>Apprendre aujourd’hui.<br/><em>Agir demain.</em></h2><p>Notre Dame de Lourdes réunit un lycée technique et un centre de formation sur un même site, à Dassa-Zoumè.</p><p>Notre vocation : accompagner les élèves et les apprenants dans l’acquisition de savoirs et de compétences utiles à leur avenir professionnel.</p><div className="value"><Check size={16}/><span><strong>Deux parcours complémentaires</strong>Une voie scolaire et une voie de formation professionnelle.</span></div><div className="value"><Check size={16}/><span><strong>Des métiers qui font avancer</strong>Du bâtiment au numérique, de l’énergie à la restauration.</span></div><a className="text-link" href={whatsapp} target="_blank" rel="noreferrer">Faire connaissance avec l’établissement <ArrowUpRight size={18}/></a></div></section></Reveal>
+      <Reveal><section className="library-banner wrap"><div className="library-icon"><BookOpen size={48} strokeWidth={1}/></div><div><div className="eyebrow">L’ESPACE DES APPRENANTS</div><h2>Le savoir se partage.</h2><p>Retrouvez les documents de votre formation dans la bibliothèque.</p></div><Link href="/bibliotheque" className="button white">Explorer la bibliothèque <ArrowUpRight size={18}/></Link></section></Reveal>
+      <Reveal><section className="faq section wrap"><div><div className="eyebrow">03 — ON VOUS RÉPOND</div><h2>Et si on levait<br/>vos <em>derniers doutes ?</em></h2><a className="text-link" href={whatsapp} target="_blank" rel="noreferrer">Une autre question ? Écrivez-nous <ArrowUpRight size={17}/></a></div><div className="faq-list">{questions.map(([q,a],i)=><div className="faq-item" key={q}><button aria-expanded={faq===i} aria-controls={`faq-${i}`} onClick={()=>setFaq(faq===i ? null : i)}>{q}{faq===i ? <Minus size={19}/> : <Plus size={19}/>}</button><div className="faq-answer" data-open={faq===i} aria-hidden={faq!==i}><div><p id={`faq-${i}`}>{a}</p></div></div></div>)}</div></section></Reveal>
+      <section className="cta"><div className="wrap"><div className="eyebrow">LE PREMIER PAS, C’EST LE VÔTRE.</div><h2>Votre avenir n’attend<br/>plus que <em>vous.</em></h2><Link href="/inscription" className="button white">Commencer ma préinscription <ArrowUpRight size={19}/></Link><p>Une question avant de vous lancer ? <a href={whatsapp} target="_blank" rel="noreferrer">Parlons-en sur WhatsApp.</a></p><div className="cta-star" aria-hidden="true">✳</div></div></section>
+    </main>
+    <footer className="wrap"><div className="footer-top"><Brand/><p>Lycée technique & centre de formation<br/>Dassa-Zoumè, Bénin</p><a href={whatsapp} target="_blank" rel="noreferrer"><WhatsAppIcon size={18}/> +229 01 95 61 62 44 <ArrowUpRight size={16}/></a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Notre Dame de Lourdes.</span><span>Le savoir en tête. Le métier entre les mains.</span><Link href="/confidentialite">Confidentialité</Link></div></footer>
+  </>;
+}
+function ArrowDown(){return <ArrowRight size={17} style={{transform:'rotate(90deg)'}}/>}

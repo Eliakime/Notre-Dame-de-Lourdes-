@@ -1,0 +1,79 @@
+[
+  {
+    "code": "F4",
+    "image": "public/images/formations/f4.webp",
+    "thumbnail": "public/images/formations/f4-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing civil engineering: an architectural scale model with archways, blueprint sheets, a triangular drafting ruler, miniature brick walls and a blue safety helmet on a pale ivory table. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "F3",
+    "image": "public/images/formations/f3.webp",
+    "thumbnail": "public/images/formations/f3-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing electrotechnical engineering: an isolated training electric motor, neatly organized copper coils, multimeter, blue insulated cables and a small disconnected demonstration switchboard. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "DWEB",
+    "image": "public/images/formations/dweb.webp",
+    "thumbnail": "public/images/formations/dweb-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing web development: a sleek open laptop displaying abstract geometric interface blocks without letters, blue keyboard, ceramic cup and a few sculptural cobalt geometric forms on a clean desk. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "MMV",
+    "image": "public/images/formations/mmv.webp",
+    "thumbnail": "public/images/formations/mmv-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing vehicle maintenance: a beautifully arranged disconnected cutaway engine component, socket wrench set, mechanic blue gloves and a metallic wheel hub on a clean workshop table. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "HR",
+    "image": "public/images/formations/hr.webp",
+    "thumbnail": "public/images/formations/hr-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing hospitality and restaurant service: elegant restaurant table setting with folded cobalt blue linen napkin, polished silverware, white ceramic plate, clear water glass and a small welcome desk bell. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "EB",
+    "image": "public/images/formations/eb.webp",
+    "thumbnail": "public/images/formations/eb-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing building electricity: a disconnected domestic electrical training board, a neat coil of blue electrical cable, insulated screwdriver, multimeter and electrical sockets. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "CP",
+    "image": "public/images/formations/cp.webp",
+    "thumbnail": "public/images/formations/cp-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing cooking and pastry: a golden artisanal tart, a whisk, a rolling pin, an ivory mixing bowl, a folded cobalt blue apron and a few fresh ingredients on a clean kitchen table. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "IMPS",
+    "image": "public/images/formations/imps.webp",
+    "thumbnail": "public/images/formations/imps-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing solar panel installation: a miniature solar panel with realistic blue photovoltaic cells angled toward sunlight, disconnected charge controller, coiled cables and protective blue gloves. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "MAC",
+    "image": "public/images/formations/mac.webp",
+    "thumbnail": "public/images/formations/mac-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing masonry: a carefully constructed small terracotta brick corner, a masonry trowel, a blue spirit level and a cement mixing tray on a pale work table. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "SER",
+    "image": "public/images/formations/ser.webp",
+    "thumbnail": "public/images/formations/ser-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing screen printing: a wooden screen-printing frame with blue ink, a squeegee, neatly folded ivory textile printed with one cobalt abstract circular pattern and small ink containers. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  },
+  {
+    "code": "REV",
+    "image": "public/images/formations/rev.webp",
+    "thumbnail": "public/images/formations/rev-card.webp",
+    "tool": "imagegen (outil intégré)",
+    "prompt": "Use case: stylized-concept. Asset type: landscape editorial illustration for a technical school course page in Benin, 1536x1024. Primary request: an elegant tactile 3D still life representing interior finishing trades: tactile samples of white plaster cornice, ivory and cobalt ceramic tiles, a paint roller, a paintbrush, a blue paint tray and a neatly finished small wall section. Premium art direction, cobalt blue and navy with warm terracotta and cream accents, beautiful soft natural sunlight, sculptural shadows, refined realistic material textures, generous uncluttered composition. No people, no words, no letters, no logos, no watermark. This is a conceptual illustration of the trade, not a real school facility."
+  }
+]

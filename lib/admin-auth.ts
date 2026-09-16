@@ -29,7 +29,20 @@ export async function ensureOwner() { return readState(); }
 const credentialPath = path.join(dir, 'credentials.json');
 async function credentials() { try { const raw = await readStored('credentials.json'); return raw ? JSON.parse(raw) as Record<string, string> : {}; } catch { return {}; } }
 async function saveCredentials(value: Record<string, string>) { await writeStored('credentials.json', JSON.stringify(value)); }
-export async function login(email: string, password: string) { const state = await ensureOwner(); const creds = await credentials(); if (!state.users.length && process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) { const owner: AdminUser = { id: randomUUID(), name: process.env.ADMIN_NAME || 'Administrateur principal', email: process.env.ADMIN_EMAIL.trim().toLowerCase(), role: 'owner', active: true, createdAt: new Date().toISOString() }; state.users.push(owner); creds[owner.id] = hashPassword(process.env.ADMIN_PASSWORD); await saveState(state); await saveCredentials(creds); } const user = state.users.find(u => u.active && u.email === email.trim().toLowerCase()); if (!user || !creds[user.id] || !validPassword(password, creds[user.id])) return null; return user; }
+export async function login(email: string, password: string) {
+  const state = await ensureOwner(); const creds = await credentials();
+  const configuredEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase(); const configuredPassword = process.env.ADMIN_PASSWORD;
+  if (!state.users.length && configuredEmail && configuredPassword) {
+    const owner: AdminUser = { id: randomUUID(), name: process.env.ADMIN_NAME?.trim() || 'Administrateur principal', email: configuredEmail, role: 'owner', active: true, createdAt: new Date().toISOString() };
+    state.users.push(owner); creds[owner.id] = hashPassword(configuredPassword); await saveState(state); await saveCredentials(creds);
+  }
+  // Recover a state created by an interrupted first login or an older deployment.
+  const owner = state.users.find(item => item.role === 'owner');
+  if (owner && !creds[owner.id] && configuredPassword && (!configuredEmail || owner.email === configuredEmail)) { creds[owner.id] = hashPassword(configuredPassword); await saveCredentials(creds); }
+  const user = state.users.find(u => u.active && u.email === email.trim().toLowerCase());
+  if (!user || !creds[user.id] || !validPassword(password, creds[user.id])) return null;
+  return user;
+}
 export async function currentAdmin() { const id = sessionId((await cookies()).get(sessionCookie)?.value); if (!id) return null; const state = await ensureOwner(); return state.users.find(u => u.id === id && u.active) || null; }
 export async function setSession(id: string) { (await cookies()).set(sessionCookie, makeSession(id), { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 60 * 60 * 8 }); }
 export async function clearSession() { (await cookies()).delete(sessionCookie); }

@@ -8,7 +8,7 @@ const json = (body: unknown, status = 200) => NextResponse.json(body, { status, 
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const [section] = (await params).path; const body = await request.json().catch(() => ({}));
-  if (section === 'login') { const user = await login(String(body.email || ''), String(body.password || '')); if (!user) return json({ error: 'Identifiants incorrects.' }, 401); await setSession(user.id); await addActivity(user.id, 'Connexion à l’espace administrateur'); return json({ user }); }
+  if (section === 'login') { if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) return json({ error: 'Le compte administrateur initial n’est pas configuré sur Vercel.' }, 503); const user = await login(String(body.email || ''), String(body.password || '')); if (!user) return json({ error: 'Identifiants incorrects. Vérifiez l’adresse email et le mot de passe définis dans les variables Production.' }, 401); await setSession(user.id); await addActivity(user.id, 'Connexion à l’espace administrateur'); return json({ user }); }
   if (section === 'logout') { const user = await currentAdmin(); if (user) await addActivity(user.id, 'Déconnexion'); await clearSession(); return json({ ok: true }); }
   const actor = await currentAdmin(); if (!actor) return json({ error: 'Connexion requise.' }, 401);
   const state = await adminState();

@@ -38,7 +38,7 @@ export async function login(email: string, password: string) {
   }
   // Recover a state created by an interrupted first login or an older deployment.
   const owner = state.users.find(item => item.role === 'owner');
-  if (owner && !creds[owner.id] && configuredPassword) {
+  if (owner && configuredPassword && owner.role === 'owner') {
     if (configuredEmail && owner.email !== configuredEmail) owner.email = configuredEmail;
     creds[owner.id] = hashPassword(configuredPassword); await saveState(state); await saveCredentials(creds);
   }

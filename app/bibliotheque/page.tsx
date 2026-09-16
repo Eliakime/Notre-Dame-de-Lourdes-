@@ -51,7 +51,7 @@ export default function Bibliotheque() {
           </article>)}</div>
         </> : <div className="empty library-empty"><BookOpen size={38}/><h2>{docs.length ? 'Aucun document ne correspond.' : 'La bibliothèque se prépare.'}</h2><p>{docs.length ? 'Essayez un autre titre ou élargissez vos filtres.' : 'Les livres et supports de cours apparaîtront ici dès leur publication.'}</p>{activeFilters ? <button className="button small" onClick={reset}>Voir toutes les ressources</button> : <a className="button small" href={`${whatsapp}?text=${encodeURIComponent('Bonjour, je recherche un document pour ma formation. Pouvez-vous m’aider ?')}`} target="_blank" rel="noreferrer">Contacter le secrétariat</a>}</div>}
       </section>
-      <Link className="admin-link" href="/administration">Espace administration →</Link>
+      <Link className="admin-link" href="/partager">Proposer un document →</Link>
     </main>
   </>;
 }

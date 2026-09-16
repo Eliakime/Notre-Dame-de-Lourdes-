@@ -29,9 +29,9 @@ export default function Administration() {
     } catch (e) { setError(true); setStatus(e instanceof Error ? e.message : 'Le dépôt a échoué.'); }
     finally { setBusy(false); }
   }
-  return <><div className="sub-header wrap"><Brand/><Link href="/bibliotheque"><ArrowLeft size={15}/> Bibliothèque</Link></div><main className="wrap upload-wrap"><div className="page-intro"><div className="eyebrow">ESPACE ADMINISTRATION</div><h1>Partager un document.</h1><p>Accès réservé aux personnes habilitées par l’établissement. Les documents publiés sont accessibles à tous les visiteurs : déposez uniquement des ressources pédagogiques destinées au partage public.</p></div>
+  return <><div className="sub-header wrap"><Brand/><Link href="/bibliotheque"><ArrowLeft size={15}/> Bibliothèque</Link></div><main className="wrap upload-wrap"><div className="page-intro"><div className="eyebrow">ESPACE DE PARTAGE</div><h1>Partager un document.</h1><p>Proposez un support de cours, un exercice ou un document utile aux apprenants. Les fichiers publiés sont accessibles aux visiteurs de la bibliothèque.</p></div>
     <form className="form-card" onSubmit={upload}>
-      <label className="field">Clé d’administration *<input type="password" name="token" autoComplete="off" required maxLength={200}/></label>
+      <label className="field">Clé de publication *<input type="password" name="token" autoComplete="off" required maxLength={200}/></label>
       <label className="field">Titre du document *<input name="title" required maxLength={140} placeholder="Ex. : Exercices d’électricité — chapitre 1" value={title} onChange={e => setTitle(e.target.value)}/></label>
       <div className="field-grid"><label className="field">Filière *<select name="formation" required><option value="TOUS">Toutes les filières</option>{formations.map(f => <option key={f.code} value={f.code}>{f.code} — {f.name}</option>)}</select></label><label className="field">Niveau *<select name="niveau" required><option>Tous niveaux</option><option>Seconde</option><option>Première</option><option>Terminale</option><option>Centre de formation</option></select></label></div>
       <label className="field" style={{ marginTop: 20 }}>Fichier PDF *<input type="file" name="file" accept="application/pdf,.pdf" required/></label>

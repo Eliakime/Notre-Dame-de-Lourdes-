@@ -6,15 +6,19 @@ import { blobStorage, dataDir, listDocuments } from '../../../lib/documents';
 import { del, put } from '@vercel/blob';
 import { coverContentType, MAX_COVER_SIZE } from '../../../lib/document-covers';
 import { formations } from '../../../lib/formations';
+import { adminState } from '../../../lib/admin-auth';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 export async function GET(){try{return NextResponse.json(await listDocuments(),{headers:{'Cache-Control':'no-store'}})}catch(error){console.error('[documents:list]',error instanceof Error ? error.message : 'Erreur de stockage inconnue');return NextResponse.json({error:'Bibliothèque indisponible.'},{status:503})}}
 export async function POST(request:NextRequest){
  const expected=process.env.ADMIN_UPLOAD_TOKEN?.trim();
- if(!expected||expected.length<32)return NextResponse.json({error:'Le dépôt doit être configuré par le responsable du site.'},{status:503});
  const supplied=request.headers.get('authorization')?.replace(/^Bearer /,'').trim()||'';
+ const managedKeys=(await adminState()).keys.filter(key=>!key.revokedAt).map(key=>key.hash);
+ const suppliedHash=createHash('sha256').update(supplied).digest('hex');
+ const keyAccepted=managedKeys.includes(suppliedHash);
+ if((!expected||expected.length<32) && !keyAccepted)return NextResponse.json({error:'Le dépôt doit être configuré par le responsable du site.'},{status:503});
  const hash=(s:string)=>createHash('sha256').update(s).digest();
- if(!timingSafeEqual(hash(expected),hash(supplied)))return NextResponse.json({error:'Clé d’administration incorrecte.'},{status:401});
+ if(!keyAccepted && (!expected || expected.length < 32 || !timingSafeEqual(hash(expected),hash(supplied))))return NextResponse.json({error:'Clé de publication incorrecte.'},{status:401});
  const origin=request.headers.get('origin');
  if(origin&&origin!==request.nextUrl.origin)return NextResponse.json({error:'Origine de la requête non autorisée.'},{status:403});
  const limit=blobStorage ? 4*1024*1024 : 15*1024*1024;

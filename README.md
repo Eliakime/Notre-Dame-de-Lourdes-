@@ -19,7 +19,8 @@ Les commandes utilisent Webpack. Sur Windows, `scripts/next.mjs` charge le compi
 - `/formations/[slug]` : onze fiches illustrées avec présentation, compétences du domaine, exemple de projet, perspectives et préinscription contextualisée. Les contenus sont dans `lib/course-details.ts`.
 - `/inscription?formation=F4` : formulaire, validation, récapitulatif et passage explicite vers WhatsApp. Aucune inscription n’est enregistrée automatiquement : l’envoi et l’admission restent à confirmer par le secrétariat.
 - `/bibliotheque` : recherche, filtres et téléchargement des vrais documents publiés. Aucun faux document préchargé.
-- `/administration` : publication de PDF protégée par une clé côté serveur, contrôle du format et limite de 15 Mo.
+- `/partager` (anciennement `/administration`) : espace public de proposition de documents, protégé par une clé de publication mais sans compte administrateur.
+- `/admin` : espace privé séparé, avec connexion, gestion des administrateurs, clés de publication et historique.
 - `/confidentialite` : fonctionnement des données et services externes.
 
 ## Activer les dépôts
@@ -38,7 +39,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 Le serveur stocke les PDF, leurs couvertures et leurs métadonnées dans `data/documents`, hors du dossier public. `DOCUMENTS_DIR` permet de choisir un volume persistant. Sur Vercel, connecter un stockage Blob privé au projet en Production : `BLOB_STORE_ID` active l’authentification OIDC, ou `BLOB_READ_WRITE_TOKEN` permet d’utiliser un jeton. Redéployer après modification de ces variables. Les fichiers locaux ne sont pas automatiquement transférés sur Blob. Prévoir sauvegardes, HTTPS et contrôle de débit au niveau de l’hébergeur. Les PDF et couvertures sont publics via le site : publier uniquement des supports autorisés sans données personnelles.
 
-Pour retirer un document, supprimer son fichier `.json`, puis le PDF et l’éventuel fichier `.cover` du même identifiant dans le stockage utilisé. Le site n’inclut pas encore de gestion des comptes administrateurs ni d’interface de suppression.
+Pour retirer un document, supprimer son fichier `.json`, puis le PDF et l’éventuel fichier `.cover` du même identifiant dans le stockage utilisé. Les administrateurs et leurs clés se gèrent depuis `/admin` ; les actions sont conservées dans l’historique de cet espace.
 
 ## Identité et contenu à valider
 

@@ -24,15 +24,21 @@ Les commandes utilisent Webpack. Sur Windows, `scripts/next.mjs` charge le compi
 
 ## Activer les dépôts
 
+La bibliothèque propose une recherche par titre, un filtre par filière (lycée ou centre de formation) et un filtre par niveau. Les ressources « Toutes les filières » et « Tous niveaux » restent visibles dans les sélections correspondantes.
+
+Le formulaire accepte une couverture facultative JPEG, PNG ou WebP de 1 Mo maximum, avec aperçu avant publication. Sans couverture, les nouveaux documents comme les anciens utilisent l’illustration par défaut, avec leur titre. Sur Vercel, le PDF et sa couverture sont limités à 4 Mo au total ; sur disque local, la limite totale est de 15 Mo. Les couvertures sont enregistrées avec l’extension interne `.cover` et servies par `/api/documents/[id]/cover`.
+
+Les illustrations générées avec l’outil intégré `image_gen` sont dans `public/images/library/` : `library.webp` pour la bibliothèque et le bandeau d’accueil, `default-cover.webp` pour les livres sans couverture. Leurs prompts complets figurent dans `scripts/library-assets.json`. Les PNG d’origine sont conservés dans le même dossier.
+
 Copier `.env.example` vers `.env.local`, générer une clé aléatoire d’au moins 32 caractères et renseigner `ADMIN_UPLOAD_TOKEN`. Ne jamais publier cette clé ni la préfixer par `NEXT_PUBLIC_`. La communiquer uniquement aux personnes autorisées. Aucun dépôt n’est permis tant que la clé n’est pas configurée.
 
 ```sh
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
-Le serveur stocke les PDF et leurs métadonnées dans `data/documents`, hors du dossier public. `DOCUMENTS_DIR` permet de choisir un volume persistant. Prévoir sauvegardes et contrôle de débit au niveau de l’hébergeur. Ce stockage convient à une instance Node.js avec disque persistant. Pour Vercel ou plusieurs instances, remplacer le stockage local par un stockage objet et une base de données avant la mise en production. Configurer la limite de requête du proxy à au moins 16 Mo et HTTPS. Les PDF sont publics : publier uniquement des supports autorisés sans données personnelles.
+Le serveur stocke les PDF, leurs couvertures et leurs métadonnées dans `data/documents`, hors du dossier public. `DOCUMENTS_DIR` permet de choisir un volume persistant. Sur Vercel, connecter un stockage Blob privé au projet en Production : `BLOB_STORE_ID` active l’authentification OIDC, ou `BLOB_READ_WRITE_TOKEN` permet d’utiliser un jeton. Redéployer après modification de ces variables. Les fichiers locaux ne sont pas automatiquement transférés sur Blob. Prévoir sauvegardes, HTTPS et contrôle de débit au niveau de l’hébergeur. Les PDF et couvertures sont publics via le site : publier uniquement des supports autorisés sans données personnelles.
 
-Pour retirer un document, supprimer son fichier `.json` puis le PDF du même identifiant dans le volume documentaire. Le site n’inclut pas encore de gestion des comptes administrateurs ni d’interface de suppression.
+Pour retirer un document, supprimer son fichier `.json`, puis le PDF et l’éventuel fichier `.cover` du même identifiant dans le stockage utilisé. Le site n’inclut pas encore de gestion des comptes administrateurs ni d’interface de suppression.
 
 ## Identité et contenu à valider
 
@@ -47,6 +53,8 @@ Le logo fourni dans `logo.jpeg` est intégré dans la navigation via `public/ima
 
 ## Vérifications
 
+Le serveur Playwright utilise `.next-playwright` pour ses fichiers compilés, séparément du dossier `.next` du serveur habituel. Les tests peuvent ainsi tourner pendant le développement sans effacer ses pages compilées. Sur Windows, si Chromium est bloqué, définir `PLAYWRIGHT_CHANNEL=msedge` pour utiliser Edge.
+
 ```sh
 npm run build
 npm run typecheck
@@ -54,7 +62,7 @@ npx playwright install chromium
 npm test
 ```
 
-Les quatre scénarios vérifient le parcours WhatsApp mobile, les onze fiches et leurs images, la navigation au clavier et avec réduction des mouvements, puis le dépôt et le téléchargement des PDF. Les tests utilisent un répertoire documentaire temporaire isolé et une clé de test. Ils ne contactent pas WhatsApp et ne transmettent aucune demande à l’établissement.
+Les scénarios vérifient le parcours WhatsApp mobile, les onze fiches et leurs images, la navigation au clavier et avec réduction des mouvements, puis le dépôt et le téléchargement des PDF, les couvertures et les filtres de la bibliothèque. Les tests utilisent un répertoire documentaire temporaire isolé et une clé de test. Ils ne contactent pas WhatsApp et ne transmettent aucune demande à l’établissement.
 
 ## Images et animations
 

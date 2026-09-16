@@ -1,0 +1,13 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "path": "public/images/library/library.webp",
+      "prompt": "Use case: stylized-concept. Asset type: wide website library hero and homepage banner for Notre Dame de Lourdes technical school in Benin. Create a beautiful editorial illustration of a welcoming library, warm oak bookshelves filled with blue and cream books, a reading desk with an open book, soft daylight through tall arched windows, a little greenery. Refined painterly 3D illustration, tactile paper and wood, navy blue, cobalt blue, ivory and warm golden light matching a blue and white education website. Wide landscape composition, bookshelves and reading table concentrated towards the right, quieter darker navy area on left suitable for white HTML text overlay. No people, no letters, no text, no logos, no watermark. This is an illustrative imagined library, not a documentary school photo."
+    },
+    {
+      "path": "public/images/library/default-cover.webp",
+      "prompt": "Use case: stylized-concept. Asset type: portrait default cover artwork for educational PDFs without uploaded covers. Create a refined flat front-facing book cover artwork filling the frame, portrait 2:3 composition. Deep navy and cobalt blue textured paper background, elegant ivory illustration of an open book in the lower middle, subtle golden arch and delicate geometric line accents suggesting knowledge and learning. Calm generous negative space in upper half. Premium educational publishing aesthetic, cohesive with a blue and white technical school library. No text, no letters, no logos, no watermark, no perspective mockup, no surrounding objects."
+    }
+  ]
+}

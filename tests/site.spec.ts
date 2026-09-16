@@ -18,7 +18,7 @@ test('mobile navigation, training tabs and WhatsApp pre-registration',async({pag
 
 test('every formation has its own illustrated detail page and selected registration',async({page,request})=>{
  test.setTimeout(120000);
- const routes = ['genie-civil','electrotechnique','developpement-web','maintenance-vehicules','hotellerie-restauration','electricite-batiment','cuisine-patisserie','panneaux-solaires','maconnerie','serigraphie','revetement-finitions'];
+ const routes = ['genie-civil','electrotechnique','developpement-web','metiers-mode-vetements','hotellerie-restauration','electricite-batiment','cuisine-patisserie','panneaux-solaires','maconnerie','serigraphie','revetement-finitions'];
  const codes = ['F4','F3','DWEB','MMV','HR','EB','CP','IMPS','MAC','SER','REV'];
  for(let i=0;i<routes.length;i++){
   const response=await page.goto(`/formations/${routes[i]}`);
@@ -60,5 +60,5 @@ test('protected PDF publication, search and download',async({request,page})=>{
  const uploaded=await request.post('/api/documents',{headers:{Authorization:`Bearer ${token}`},multipart:{title:'Exercices de construction',formation:'F4',niveau:'Seconde',file:{name:'cours.pdf',mimeType:'application/pdf',buffer:pdf}}});expect(uploaded.status()).toBe(201);const doc=await uploaded.json();
  const download=await request.get(`/api/documents/${doc.id}`);expect(download.status()).toBe(200);expect(download.headers()['content-disposition']).toContain('attachment');expect(await download.body()).toEqual(pdf);
  expect((await request.get('/api/documents/invalid')).status()).toBe(404);
- await page.goto('/bibliotheque');await expect(page.getByRole('heading',{name:'Exercices de construction'})).toBeVisible();await page.getByRole('combobox',{name:'Formation',exact:true}).selectOption('F3');await expect(page.getByRole('heading',{name:'Aucun document ne correspond.'})).toBeVisible();await page.getByRole('combobox',{name:'Formation',exact:true}).selectOption('F4');await page.getByLabel('Rechercher').fill('construction');await expect(page.getByRole('link',{name:'Télécharger le document'})).toBeVisible();
+ await page.goto('/bibliotheque');await expect(page.getByRole('heading',{name:'Exercices de construction'})).toBeVisible();await page.getByRole('combobox',{name:'Filière',exact:true}).selectOption('F3');await expect(page.getByRole('heading',{name:'Aucun document ne correspond.'})).toBeVisible();await page.getByRole('combobox',{name:'Filière',exact:true}).selectOption('F4');await page.getByLabel('Rechercher').fill('construction');await expect(page.getByRole('link',{name:'Télécharger le document'})).toBeVisible();
 });

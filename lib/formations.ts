@@ -2,7 +2,7 @@ export const lycee = [
   { code: 'F4', name: 'Génie civil', detail: 'Imaginer, dessiner et construire les espaces de demain.', icon: 'building' },
   { code: 'F3', name: 'Électrotechnique', detail: 'Comprendre l’énergie et donner vie aux installations.', icon: 'zap' },
   { code: 'DWEB', name: 'Développement web', detail: 'Transformer ses idées en expériences numériques.', icon: 'code' },
-  { code: 'MMV', name: 'Maintenance des véhicules', detail: 'Explorer la mécanique et développer son savoir-faire.', icon: 'wrench' },
+  { code: 'MMV', name: 'Métiers de la Mode Vêtements', detail: 'Imaginer des vêtements et donner forme à sa créativité.', icon: 'scissors' },
   { code: 'HR', name: 'Hôtellerie & restauration', detail: 'Cultiver le sens de l’accueil et les arts de la table.', icon: 'chef' },
 ];
 export const centre = [

@@ -2,7 +2,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { get, list } from '@vercel/blob';
 export const dataDir=process.env.DOCUMENTS_DIR || path.join(process.cwd(),'data','documents');
-export type DocumentMeta={id:string;title:string;formation:string;niveau:string;size:number;createdAt:string};
+export type DocumentMeta={id:string;title:string;formation:string;niveau:string;size:number;createdAt:string;hasCover?:boolean};
 export const blobStorage = Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 export async function listDocuments(): Promise<DocumentMeta[]> {
   if (blobStorage) {

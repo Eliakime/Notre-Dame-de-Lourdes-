@@ -40,13 +40,13 @@ export const courseDetails: Record<string, CourseDetail> = {
     imageAlt: 'Illustration du développement web : ordinateur avec une interface graphique et objets bleus.',
   },
   MMV: {
-    slug: 'maintenance-vehicules', tagline: 'Comprendre la mécanique. Trouver la solution.',
-    introduction: 'La maintenance des véhicules s’intéresse au fonctionnement, à l’entretien et au diagnostic des systèmes automobiles. Elle demande de l’observation, un raisonnement méthodique et le goût du travail technique.',
-    profile: 'Vous aimez comprendre comment fonctionnent les machines. Vous êtes patient, attentif aux détails et intéressé par l’univers automobile.',
-    skills: [{ title: 'Explorer les systèmes', text: 'Identifier les grands ensembles d’un véhicule et comprendre leurs fonctions.' }, { title: 'Observer et diagnostiquer', text: 'Relier un symptôme à des pistes de recherche et organiser les vérifications.' }, { title: 'Connaître les outils', text: 'Découvrir l’outillage, les instruments de contrôle et leur bon usage.' }, { title: 'Entretenir avec rigueur', text: 'Comprendre l’importance des procédures, de la traçabilité et de la sécurité.' }],
-    careers: ['Entretien et réparation automobile', 'Diagnostic et assistance en atelier', 'Poursuite d’études en maintenance'],
-    project: { title: 'Raconter le fonctionnement d’un moteur', text: 'À partir d’un modèle pédagogique, repérer les principales pièces et expliquer comment elles travaillent ensemble.' },
-    imageAlt: 'Illustration de la maintenance automobile : coupe de moteur, outils et gants de mécanicien.',
+    slug: 'metiers-mode-vetements', tagline: 'De l’idée au vêtement, exprimez votre créativité.',
+    introduction: 'Les Métiers de la Mode Vêtements associent créativité, connaissance des textiles et précision du geste. Du croquis à la confection, cette voie explore les étapes qui donnent forme à un vêtement.',
+    profile: 'Vous aimez la mode, le dessin et le travail manuel. Vous êtes attentif aux détails et vous avez envie de transformer vos idées en créations textiles.',
+    skills: [{ title: 'Imaginer un modèle', text: 'Exprimer une idée par le croquis et observer les lignes et les volumes d’un vêtement.' }, { title: 'Découvrir les textiles', text: 'Reconnaître les matières et comprendre leur influence sur le tombé et l’usage d’un vêtement.' }, { title: 'Préparer la coupe', text: 'Aborder les mesures, les patrons et le placement des pièces sur le tissu.' }, { title: 'Assembler et soigner', text: 'Découvrir les techniques de couture, les finitions et le contrôle de la qualité.' }],
+    careers: ['Confection et retouche de vêtements', 'Ateliers de création textile', 'Poursuite d’études dans les métiers de la mode'],
+    project: { title: 'Du croquis à une première création', text: 'Imaginer un vêtement simple, choisir un tissu et décrire les étapes de coupe, d’assemblage et de finition.' },
+    imageAlt: 'Illustration des métiers de la mode : robe sur mannequin, tissu, patron et fil à coudre.',
   },
   HR: {
     slug: 'hotellerie-restauration', tagline: 'Faites de l’accueil un véritable savoir-faire.',
@@ -118,4 +118,4 @@ export function getCourseBySlug(slug: string) {
   return formation ? { ...formation, ...courseDetails[formation.code] } : undefined;
 }
 export function courseHref(code: string) { return `/formations/${courseDetails[code].slug}`; }
-export function courseImage(code: string, thumbnail = false) { return `/images/formations/${code.toLowerCase()}${thumbnail ? '-card' : ''}.webp`; }
+export function courseImage(code: string, thumbnail = false) { if (code === 'MMV') return '/images/formations/mmv.svg'; return `/images/formations/${code.toLowerCase()}${thumbnail ? '-card' : ''}.webp`; }

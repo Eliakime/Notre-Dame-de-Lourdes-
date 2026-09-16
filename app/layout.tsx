@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import './experience.css';
+import './library.css';
 import { ScrollProgress } from '../components/Motion';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { whatsapp } from '../lib/formations';

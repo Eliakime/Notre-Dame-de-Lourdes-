@@ -20,14 +20,14 @@ const sign = (value: string) => createHmac('sha256', secret()).update(value).dig
 const makeSession = (id: string) => `${id}.${sign(id)}`;
 const sessionId = (value?: string | null) => { if (!value || !secret()) return null; const [id, signature] = value.split('.'); const expected = id ? sign(id) : ''; return id && signature && signature.length === expected.length && timingSafeEqual(Buffer.from(signature), Buffer.from(expected)) ? id : null; };
 
-async function readStored(name: string) { if (blobStore()) { try { const item = await get(`admin/${name}`, { access: 'private' }); return item?.stream ? await new Response(item.stream).text() : null; } catch (error) { console.error(`[admin:read:${name}]`, error instanceof Error ? error.message : error); return null; } } try { return await readFile(path.join(dir, name), 'utf8'); } catch { return null; } }
-async function writeStored(name: string, value: string) { try { if (blobStore()) { await put(`admin/${name}`, value, { access: 'private', contentType: 'application/json', addRandomSuffix: false }); return; } await mkdir(dir, { recursive: true }); await writeFile(path.join(dir, name), value, 'utf8'); } catch (error) { console.error(`[admin:write:${name}]`, error instanceof Error ? error.message : error); throw error; } }
-async function readState(): Promise<AdminState> { try { const raw = await readStored('state.json'); return raw ? JSON.parse(raw) as AdminState : { users: [], keys: [], activity: [] }; } catch { return { users: [], keys: [], activity: [] }; } }
+async function readStored(name: string) { if (blobStore()) { try { const item = await get(`admin/${name}`, { access: 'private', useCache: false }); return item?.stream ? await new Response(item.stream).text() : null; } catch (error) { console.error(`[admin:read:${name}]`, error instanceof Error ? error.message : error); throw error; } } try { return await readFile(path.join(dir, name), 'utf8'); } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null; throw error; } }
+async function writeStored(name: string, value: string) { try { if (blobStore()) { await put(`admin/${name}`, value, { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: true }); return; } await mkdir(dir, { recursive: true }); await writeFile(path.join(dir, name), value, 'utf8'); } catch (error) { console.error(`[admin:write:${name}]`, error instanceof Error ? error.message : error); throw error; } }
+async function readState(): Promise<AdminState> { const raw = await readStored('state.json'); return raw ? JSON.parse(raw) as AdminState : { users: [], keys: [], activity: [] }; }
 async function saveState(state: AdminState) { await writeStored('state.json', JSON.stringify(state, null, 2)); }
 export async function ensureOwner() { return readState(); }
 // Password hashes are kept separately from the public user record for compatibility with the existing state file.
 const credentialPath = path.join(dir, 'credentials.json');
-async function credentials() { try { const raw = await readStored('credentials.json'); return raw ? JSON.parse(raw) as Record<string, string> : {}; } catch { return {}; } }
+async function credentials() { const raw = await readStored('credentials.json'); return raw ? JSON.parse(raw) as Record<string, string> : {}; }
 async function saveCredentials(value: Record<string, string>) { await writeStored('credentials.json', JSON.stringify(value)); }
 export async function login(email: string, password: string) {
   const state = await ensureOwner(); const creds = await credentials();

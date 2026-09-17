@@ -6,19 +6,20 @@ import { blobStorage, dataDir, listDocuments } from '../../../lib/documents';
 import { del, put } from '@vercel/blob';
 import { coverContentType, MAX_COVER_SIZE } from '../../../lib/document-covers';
 import { formations } from '../../../lib/formations';
-import { adminState } from '../../../lib/admin-auth';
+import { addActivity, adminState, currentAdmin } from '../../../lib/admin-auth';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 export async function GET(){try{return NextResponse.json(await listDocuments(),{headers:{'Cache-Control':'no-store'}})}catch(error){console.error('[documents:list]',error instanceof Error ? error.message : 'Erreur de stockage inconnue');return NextResponse.json({error:'Bibliothèque indisponible.'},{status:503})}}
 export async function POST(request:NextRequest){
+ const sessionAdmin = await currentAdmin();
  const expected=process.env.ADMIN_UPLOAD_TOKEN?.trim();
  const supplied=request.headers.get('authorization')?.replace(/^Bearer /,'').trim()||'';
  const managedKeys=(await adminState()).keys.filter(key=>!key.revokedAt).map(key=>key.hash);
  const suppliedHash=createHash('sha256').update(supplied).digest('hex');
  const keyAccepted=managedKeys.includes(suppliedHash);
- if((!expected||expected.length<32) && !keyAccepted)return NextResponse.json({error:'Le dépôt doit être configuré par le responsable du site.'},{status:503});
+ if(!sessionAdmin && (!expected||expected.length<32) && !keyAccepted)return NextResponse.json({error:'Le dépôt doit être configuré par le responsable du site.'},{status:503});
  const hash=(s:string)=>createHash('sha256').update(s).digest();
- if(!keyAccepted && (!expected || expected.length < 32 || !timingSafeEqual(hash(expected),hash(supplied))))return NextResponse.json({error:'Clé de publication incorrecte.'},{status:401});
+ if(!sessionAdmin && !keyAccepted && (!expected || expected.length < 32 || !timingSafeEqual(hash(expected),hash(supplied))))return NextResponse.json({error:'Clé de publication incorrecte.'},{status:401});
  const origin=request.headers.get('origin');
  if(origin&&origin!==request.nextUrl.origin)return NextResponse.json({error:'Origine de la requête non autorisée.'},{status:403});
  const limit=blobStorage ? 4*1024*1024 : 15*1024*1024;
@@ -52,11 +53,13 @@ export async function POST(request:NextRequest){
      if(coverBytes && coverType){const image=await put(`documents/${id}.cover`,coverBytes,{access:'private',contentType:coverType,addRandomSuffix:false});saved.push(image.url)}
      await put(`documents/${id}.json`, JSON.stringify(meta), { access: 'private', contentType: 'application/json', addRandomSuffix:false });
    }catch(error){if(saved.length)await del(saved).catch(()=>{});throw error}
+   if (sessionAdmin) await addActivity(sessionAdmin.id, 'Ajout d’un document', title);
    return NextResponse.json(meta,{status:201});
  }
  await mkdir(dataDir,{recursive:true});
  await writeFile(path.join(dataDir,`${id}.pdf`),bytes,{flag:'wx'});
  try{if(coverBytes)await writeFile(path.join(dataDir,`${id}.cover`),coverBytes,{flag:'wx'});await writeFile(path.join(dataDir,`${id}.tmp`),JSON.stringify(meta),{flag:'wx'});await rename(path.join(dataDir,`${id}.tmp`),path.join(dataDir,`${id}.json`))}catch(error){await unlink(path.join(dataDir,`${id}.pdf`)).catch(()=>{});await unlink(path.join(dataDir,`${id}.cover`)).catch(()=>{});await unlink(path.join(dataDir,`${id}.tmp`)).catch(()=>{});throw error}
+ if (sessionAdmin) await addActivity(sessionAdmin.id, 'Ajout d’un document', title);
  return NextResponse.json(meta,{status:201});
  }catch{return NextResponse.json({error:'Impossible de publier le document. Vérifiez le fichier et réessayez.'},{status:500})}
 }

@@ -111,6 +111,15 @@ export const courseDetails: Record<string, CourseDetail> = {
     project: { title: 'Composer une palette de matières', text: 'Associer une teinte, un carreau et un élément de staff pour imaginer la finition cohérente d’un espace.' },
     imageAlt: 'Illustration des finitions : carreaux, corniche en staff, rouleau et peinture bleue.',
   },
+  CC: {
+    slug: 'coupe-couture', tagline: 'Donnez forme à vos idées, fil après fil.',
+    introduction: 'La coupe couture associe la précision des mesures, la maîtrise du tissu et le plaisir de créer. De la préparation du patron aux finitions, cette formation accompagne les premiers gestes qui donnent vie à un vêtement.',
+    profile: 'Vous aimez la mode, le travail manuel et les réalisations concrètes. Vous êtes attentif aux détails et souhaitez apprendre à transformer une idée en vêtement.',
+    skills: [{ title: 'Prendre les mesures', text: 'Comprendre les mensurations et les repères nécessaires à une coupe juste.' }, { title: 'Préparer un patron', text: 'Découvrir les formes, les tracés et le placement des pièces sur le tissu.' }, { title: 'Assembler avec soin', text: 'Apprendre les gestes essentiels de couture et d’assemblage.' }, { title: 'Soigner les finitions', text: 'Réaliser un vêtement propre, confortable et prêt à être porté.' }],
+    careers: ['Confection et retouche de vêtements', 'Atelier de couture', 'Création textile et activité artisanale'],
+    project: { title: 'Du patron au vêtement', text: 'Choisir un modèle simple, préparer les pièces, les assembler et présenter une première réalisation.' },
+    imageAlt: 'Illustration de la coupe couture : tissu, patron, ciseaux et fil à coudre.',
+  },
 };
 
 export function getCourseBySlug(slug: string) {
@@ -118,4 +127,4 @@ export function getCourseBySlug(slug: string) {
   return formation ? { ...formation, ...courseDetails[formation.code] } : undefined;
 }
 export function courseHref(code: string) { return `/formations/${courseDetails[code].slug}`; }
-export function courseImage(code: string, thumbnail = false) { if (code === 'MMV') return '/images/formations/mmv.svg'; return `/images/formations/${code.toLowerCase()}${thumbnail ? '-card' : ''}.webp`; }
+export function courseImage(code: string, thumbnail = false) { if (code === 'MMV' || code === 'CC') return '/images/formations/mmv.svg'; return `/images/formations/${code.toLowerCase()}${thumbnail ? '-card' : ''}.webp`; }

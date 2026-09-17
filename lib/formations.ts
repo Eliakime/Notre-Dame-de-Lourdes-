@@ -12,6 +12,7 @@ export const centre = [
   { code: 'MAC', name: 'Maçonnerie', detail: 'Apprendre à bâtir, avec méthode et précision.', icon: 'building' },
   { code: 'SER', name: 'Sérigraphie', detail: 'Faire passer ses créations du dessin à la matière.', icon: 'pen' },
   { code: 'REV', name: 'Revêtement & finitions', detail: 'Carrelage, peinture et staff : le sens du détail.', icon: 'paint' },
+  { code: 'CC', name: 'Coupe Couture', detail: 'Apprendre à couper, assembler et réaliser des vêtements avec précision.', icon: 'scissors' },
 ];
 export const formations = [...lycee, ...centre];
 export const whatsapp = 'https://wa.me/2290195616244';

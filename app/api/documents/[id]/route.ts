@@ -28,7 +28,8 @@ export async function PUT(request:Request,{params}:{params:Promise<{id:string}>}
     const file = data.get('file');
     let pdfBytes: Buffer | undefined;
     if (file instanceof File && file.size > 0) {
-      if (file.size > 15 * 1024 * 1024 || !file.name.toLowerCase().endsWith('.pdf')) return NextResponse.json({ error: 'Le fichier doit être un PDF de 15 Mo maximum.' }, { status: 400 });
+      const maxFileSize = blobStorage ? 4 * 1024 * 1024 : 15 * 1024 * 1024;
+      if (file.size > maxFileSize || !file.name.toLowerCase().endsWith('.pdf')) return NextResponse.json({ error: `Le fichier doit être un PDF de ${blobStorage ? '4' : '15'} Mo maximum.` }, { status: 400 });
       pdfBytes = Buffer.from(await file.arrayBuffer());
       if (pdfBytes.subarray(0, 5).toString() !== '%PDF-') return NextResponse.json({ error: 'Le fichier sélectionné n’est pas un PDF valide.' }, { status: 400 });
     }
@@ -39,6 +40,7 @@ export async function PUT(request:Request,{params}:{params:Promise<{id:string}>}
       coverBytes = Buffer.from(await cover.arrayBuffer()); coverType = coverContentType(coverBytes);
       if (!coverType) return NextResponse.json({ error: 'Choisissez une couverture JPEG, PNG ou WebP.' }, { status: 400 });
     }
+    if ((pdfBytes?.length ?? existing.size) + (coverBytes?.length ?? 0) > (blobStorage ? 4 * 1024 * 1024 : 15 * 1024 * 1024)) return NextResponse.json({ error: `Le PDF et sa couverture dépassent ${blobStorage ? '4' : '15'} Mo au total.` }, { status: 413 });
     const removeCover = String(data.get('removeCover') || '') === 'true';
     const meta: DocumentMeta = { ...existing, title, formation, niveau, size: pdfBytes?.length ?? existing.size, hasCover: coverBytes ? true : removeCover ? false : existing.hasCover };
     if (blobStorage) {
